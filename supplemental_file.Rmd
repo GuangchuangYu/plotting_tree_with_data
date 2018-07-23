@@ -63,7 +63,7 @@ rotate <- ggtree::rotate
 
 This example uses method 1, the `%<+%` operator, to integrate taxon (`tip_data.csv`) and internal node (`inode_data.csv`) information and map the data to different colors or shapes of symbolic points and labels. The tip data contains `imageURL` that links to online figures of the species, which can be parsed and used as tip labels in `ggtree`. `ggtree` supports labeling both internal or external nodes using local or online image files such as those deposited on phylopic database^[<http://phylopic.org/>]. This also provides a solution of using subplots to annotate the tree. Online tools such as `iTOL` [@letunic_interactive_2007] and `EvolView` [@he_evolview_2016] support displaying subplots on phylogenetic tree. However only bar and pie charts are supported by these tools. Users may want to visualize node-associated data with other visualization methods, such as violin plot [@grubaugh_genomic_2017], venn diagram [@lott_covenntree:_2015], sequence logo *etc*, and display them on the tree. In `ggtree`, all kinds of subplots are supported as we can export all subplots to image files and use them to label corresponding nodes on the tree.
 
-```{r md, echo=F, fig.width=9.5, fig.height=6.2, warning=FALSE, message=FALSE, fig.cap="\\label{fig:md}Example of attaching multiple datasets and labelling taxa with image files", dev="CairoPNG", dpi=200, out.width="85%"}
+```{r md, fig.width=9.5, fig.height=6.2, warning=FALSE, message=FALSE, fig.cap="\\label{fig:md}Example of attaching multiple datasets and labelling taxa with image files", dev="CairoPNG", dpi=200, out.width="85%"}
 library(ggimage)
 library(ggtree)
 url <- paste0("https://raw.githubusercontent.com/TreeViz/",
@@ -84,6 +84,7 @@ p3 <- p2 %<+% d2 + geom_label(aes(label=vernacularName.y, fill=posterior)) +
     scale_fill_gradientn(colors=RColorBrewer::brewer.pal(3, "YlGnBu"))
 print(p3)    
 ```
+
 
 
 Although the data integrated by `%<+%` operator in `ggtree` is for tree visualization, the data attached to the `ggtree` graphic object can be converted to `treedata` object that contains the tree and the attached data. The data stored in the `treedata` object can be used directly to annotate the tree in `ggtree`.

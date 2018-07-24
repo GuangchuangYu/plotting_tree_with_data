@@ -91,7 +91,7 @@ Although the data integrated by `%<+%` operator in `ggtree` is for tree visualiz
 ## convert ggtree object to treedata object
 y <- as.treedata(p3)
 
-## all the data in 'tip_data.csv' and 'inode_data.csv' was incorporated 
+## all the data in 'tip_data.csv' and 'inode_data.csv' were incorporated 
 print(y)
 
 ## Now all the features (from external data attahced to the tree), that stored in 
@@ -102,7 +102,7 @@ ggtree(y) + geom_tiplab(aes(label = vernacularName.x, color= trophic_habit)) +
     theme(legend.position="right") + xlim(-.1, 3.5) 
 ```
 
-The `treedata` object can be exported to `BEAST` compatible `NEXUS` file^[<https://bioconductor.org/packages/release/bioc/vignettes/treeio/inst/doc/Exporter.html>], which can be parsed by `treeio` or `FigTree`^[<http://tree.bio.ed.ac.uk/software/figtree/>]. This creates the possibility to integrate external data with the tree-associated data into a single file and visualize the data not only with `ggtree`, but also `FigTree`, *etc*. 
+The `treedata` object can be exported to `BEAST` compatible `NEXUS` file^[<https://bioconductor.org/packages/release/bioc/vignettes/treeio/inst/doc/Exporter.html>], which can be parsed by `treeio` or `FigTree`^[<http://tree.bio.ed.ac.uk/software/figtree/>]. This creates the possibility to integrate tree-associated data with the tree into a single file and visualize the data not only with `ggtree`, but also `FigTree`, *etc*. 
 
 
 ### 1.2. Visualizing species abundance distribution with phylogenetic tree

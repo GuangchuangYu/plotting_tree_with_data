@@ -22,7 +22,7 @@ This repo contains source code to produce Supplementary Material of the above pa
 + supplemental_file.pdf: Supplemental Material, the PDF
 
 
-To compile the `supplemental_file.pdf`, please run the following comment in `R`:
+To compile the `supplemental_file.pdf`, please run the following command in `R`:
 
 ```r
 library(rmarkdown)

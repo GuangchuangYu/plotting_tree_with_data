@@ -85,8 +85,6 @@ p3 <- p2 %<+% d2 + geom_label(aes(label=vernacularName.y, fill=posterior)) +
 print(p3)    
 ```
 
-
-
 Although the data integrated by `%<+%` operator in `ggtree` is for tree visualization, the data attached to the `ggtree` graphic object can be converted to `treedata` object that contains the tree and the attached data. The data stored in the `treedata` object can be used directly to annotate the tree in `ggtree`.
 
 ```{r treedata, warning=F, fig.width=8, fig.height=4.5, out.width="75%", fig.cap="\\label{fig:treedata}Example of visualizing treedata object that contains tree with associated data"}
@@ -154,10 +152,12 @@ require(treeio)
 require(ggplot2)
 require(ggtree)
 
-tree = read.tree("HPV58.tree")
+hpvtree <- paste0("https://raw.githubusercontent.com/GuangchuangYu/",
+                  "plotting_tree_with_data/master/HPV58.tree")
+tree = read.tree(hpvtree)
+
 clade = c(A3=92, A1=94, A2=108, B1=156, B2=159, C=163, D1=173, D2=176)
 tree = groupClade(tree, clade)
-
 cols <- c(A1="#EC762F", A2="#CA6629", A3="#894418", B1="#0923FA", 
          B2="#020D87", C="#000000", D1="#9ACD32",D2="#08630A")
 
@@ -169,10 +169,8 @@ p <- ggtree(tree, aes(color=group), ladderize=FALSE) %>% rotate(rootnode(tree)) 
                       breaks=c("A1", "A2", "A3", "B1", "B2", "C", "D1", "D2")) +
     guides(color = guide_legend(override.aes = list(size=5, shape=15))) +
     theme_tree2(legend.position = c(.1, .88))
-
 ## Optional
-## add labels for monophyletic groups using geom_cladelabel 
-## and paraphyletic group (B) using geom_strip
+## add labels for monophyletic (A, C and D) and paraphyletic (B) groups  
 p <- p + geom_cladelabel(94, "italic(A1)", color=cols[["A1"]], offset = .003, align=TRUE, 
                         offset.text=-.001, barsize=1.2, extend = c(0, 0.5), parse=TRUE) +
     geom_cladelabel(108, "italic(A2)", color = cols[["A2"]], offset = .003, align=TRUE, 

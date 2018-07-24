@@ -1,6 +1,36 @@
-``` r
-devtools::session_info()
+# Two methods for mapping and visualizing associated data on phylogeny using ggtree
+
+## Citation
+
+If you use this work in published research, please cite:
+
+
+__G Yu__<sup>\*</sup>, TTY Lam, H Zhu, Y Guan<sup>\*</sup>. Two methods for mapping and visualizing associated data on phylogeny using ggtree. __*Journal X*__, to be submitted.
+
+
+----
+
+This repo contains source code to produce Supplementary Material of the above paper.
+
+
++ plotTree: downloaded from <https://github.com/katholt/plotTree>, access date: 2018-07-23
++ HPV58.tree: newick text of the HPV58 tree published on <http://jvi.asm.org/content/91/21/e01285-17>.
++ HPV58_aln.fas: aligned tip sequences of `HPV58.tree`
++ header.tex: LaTeX packages that used to compile the PDF
++ supp.bib: bibliography
++ supplmental_file.Rmd: R Markdown file to compile the PDF
++ supplemental_file.pdf: Supplemental Material, the PDF
+
+
+To compile the `supplemental_file.pdf`, please run the following comment in `R`:
+
+```r
+library(rmarkdown)
+render('supplemental_file.Rmd', pdf_document)
 ```
+
+Here is the output of `devtools::session_info()` on the system on which [the document](https://github.com/GuangchuangYu/plotting_tree_with_data/blob/master/supplemental_file.pdf) was compiled:
+
 
     ## Session info -------------------------------------------------------------
 

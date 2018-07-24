@@ -141,7 +141,7 @@ facet_plot(p, panel="Abundance", data=melt_simple,
 ### 1.3 Visualizing pairwise nucleotide sequence distance with phylogenetic tree
 
 
-This example reproduces Fig. 1 of [@chen_ancient_2017]. It extracts accession numbers from tip labels of the HPV58 tree and calculated pairwise nucleotide sequence distances. The distance matrix is visualized as dot and line plots. This example demonstrating the abilities of adding multiple layers to a specific panel. As illustrated on Fig. \ref{fig:jv}, the `facet_plot` function displays sequence distances as a dot plot and then adds a layer of line plot to the same panel, *i.e.* Sequence Distance. In addition, the tree in `facet_plot` can be fully annotated with multiple layers (clade labels, bootstrap support values, *etc*).
+This example reproduces Fig. 1 of [@chen_ancient_2017]. It extracts accession numbers from tip labels of the HPV58 tree and calculates pairwise nucleotide sequence distances. The distance matrix is visualized as dot and line plots. This example demonstrating the abilities of adding multiple layers to a specific panel. As illustrated on Fig. \ref{fig:jv}, the `facet_plot` function displays sequence distances as a dot plot and then adds a layer of line plot to the same panel, *i.e.* Sequence Distance. In addition, the tree in `facet_plot` can be fully annotated with multiple layers (clade labels, bootstrap support values, *etc*).
 
 ```{r message=FALSE}
 
@@ -338,12 +338,12 @@ setwd("plotTree/tree_example_april2015")
 source("../plotTree.R")
 
 ## the 'location' that used to color the nodes, cannot be used to color bar and snp data.
-## the positions of data panels are hard-coded.
 ##
 ## issues:
-## 1. bar data can not be displayed properly
+## 1. bar data can not be displayed properly.
 ## 2. legend not shown properly,
-##    there is not taxa sampled from locations label as 'other' or 'VN'
+##      there is no taxa sampled from locations label as 'other' or 'VN'.
+## 3. the positions of data panels are hard-coded.
 plotTree(tree="tree.nwk",
          infoFile="info.csv", infoCols=NA,
          colourNodesBy="location", legend.pos="topleft",
@@ -501,7 +501,7 @@ cowplot::plot_grid(p3, p4)
 Although there are many software packages support visualizing phylogenetic tree, plotting tree with data is often missing or with only limited supports. Some of the packages defines `S4` classes to store phylogenetic tree with domain specific data, such `OutbreakTools` [@jombart_outbreaktools:_2014] defined `obkData` for storing tree with epidemiology data and `phyloseq` [@mcmurdie_phyloseq:_2013] defines `phyloseq` for storing tree with microbiome data. These packages are capable to present some of the data stored in the object on the tree. However, not all the associated data are supported. For example, species abundance stored in `phyloseq` object is not supported to be visualized using `phyloseq` package. These packages did not provide any utilities to integrate external data for tree visualization. `metacoder` is able to integrate external data to be used as visual characteristics (limited to size and color) to produce heat tree. However, phylogenetic tree layouts are not supported and branch lengthes will be ignored in `metacoder`. None of these packages support visualizing external data and align the plot to tree based on the tree structure. 
 
 
-The `phylobase` package support integrating external data (especially numerical matrix) to phylogenetic tree and visualize the data as bubble plot with the tree side by side. The `plotTree` scripts supports visualizing predefined datasets as heatmap or bar plots and aligns the plot to the tree. They only provide limited supports to visualize specific data types. The funtions provided by packages or scripts are hard-coded to plot simple tree with specific panel (bubble plot or heatmap, *etc*) and there is no utilities provided to add further layer of annotations.  
+The `phylobase` package support integrating external data (especially numerical matrix) to phylogenetic tree and visualize the data as bubble plot with the tree side by side. The `plotTree` scripts supports visualizing predefined datasets as heatmap or bar plots and aligns the plot to the tree. They only provide limited supports to visualize specific data types. The funtions provided by these packages or scripts are hard-coded to plot simple tree with specific panel (bubble plot or heatmap, *etc*) and there is no utilities provided to add further layer of annotations.  
 
 
 In contrast, `ggtree` has many unique features that cannot be found in all these implementations:
@@ -513,12 +513,12 @@ In contrast, `ggtree` has many unique features that cannot be found in all these
 5. Visualizing different datasets on the same panel is supported (Fig. \ref{fig:fp4d}B and \ref{fig:heat4d}).
 6. Data integrated by `%<+%` can be used in `facet_plot` (Fig. \ref{fig:fig1} and \ref{fig:heat4d}B).
 7. Able to add further annotation to specific layers (Fig. \ref{fig:fp4d}B and \ref{fig:heat4d}).
-8. Modular design by separating tree visualization, data integration (method 1) and graph aligning (method 2).
+8. Modular design by separating tree visualization, data integration (method 1) and graph alignment (method 2).
 
-Modular design is a unique feature for `ggtree` to stand out from other packages. The tree can be visualized with data stored in tree object or external data linked by `%<+%` operator, and fully annotated with multiple layer of annotations (Fig. \ref{fig:md} and \ref{fig:jv}), before passing it to `facet_plot`. And `facet_plot` can be called progresively to add multiple panels (Fig. \ref{fig:fig1}) or multiple layers on the same panels (Fig. \ref{fig:jv}). This creates the possibility of plotting fully annotated tree with complex data panels that contains multiple graphic layers.
+Modular design is a unique feature for `ggtree` to stand out from other packages. The tree can be visualized with data stored in tree object or external data linked by `%<+%` operator, and fully annotated with multiple layers of annotations (Fig. \ref{fig:md} and \ref{fig:jv}), before passing it to `facet_plot`. `facet_plot` can be called progresively to add multiple panels (Fig. \ref{fig:fig1}) or multiple layers on the same panels (Fig. \ref{fig:jv}). This creates the possibility of plotting fully annotated tree with complex data panels that contains multiple graphic layers.
 
-`ggtree` fits the `R` ecosystem and extends the abilities of integrating and presenting data with trees to existing phylogenetic packages. As demonstrated in this paper, we are now able to plot species abundance distribution with `phyloseq` object (Fig. \ref{fig:phyloseq}), visualize numerical matrix stored in `phylo4d` object using other methods instead of just bubble plot (Fig. \ref{fig:heat4d}A) and integrate categorical values to color other data (Fig. \ref{fig:heat4d}), *etc*. All these cannot be easily done without `ggtree`. With `ggtree`, we are able to attach additional data to these tree objects using `%<+%` and align graph to tree using `facet_plot`. Integrating `ggtree` to existing workflows will definitely extends the abilities and broaden the applications to present phylogeny-associated data, especially for comparative studies. 
+`ggtree` fits the `R` ecosystem and extends the abilities of integrating and presenting data with trees to existing phylogenetic packages. As demonstrated in this paper, we are now able to plot species abundance distribution with `phyloseq` object (Fig. \ref{fig:phyloseq}), visualize numerical matrix stored in `phylo4d` object using other methods instead of just bubble plot (Fig. \ref{fig:heat4d}A) and integrate categorical values to color other data (Fig. \ref{fig:heat4d}), *etc*. All these cannot be easily done without `ggtree`. With `ggtree`, we are able to attach additional data to these tree objects using `%<+%` and align graph to tree using `facet_plot`. Integrating `ggtree` to existing workflows will definitely extends the abilities and broadens the applications to present phylogeny-associated data, especially for comparative studies. 
 
-**NOTE:** source code that produces this file can be obtained online^[<https://github.com/GuangchuangYu/plotting_tree_with_data>].
+**NOTE:** source code to produce this file can be obtained online^[<https://github.com/GuangchuangYu/plotting_tree_with_data>].
 
 ## References

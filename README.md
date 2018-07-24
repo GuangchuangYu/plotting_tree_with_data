@@ -1,7 +1,5 @@
 # Two methods for mapping and visualizing associated data on phylogeny using ggtree
 
-## Citation
-
 If you use this work in published research, please cite:
 
 
@@ -25,8 +23,7 @@ This repo contains source code to produce Supplementary Material of the above pa
 To compile the `supplemental_file.pdf`, please run the following command in `R`:
 
 ```r
-library(rmarkdown)
-render('supplemental_file.Rmd', pdf_document)
+rmarkdown::render('supplemental_file.Rmd')
 ```
 
 Here is the output of `devtools::session_info()` on the system on which [the document](https://github.com/GuangchuangYu/plotting_tree_with_data/blob/master/supplemental_file.pdf) was compiled:

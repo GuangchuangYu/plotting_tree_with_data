@@ -73,15 +73,15 @@ x <- read.tree(paste0(url, "tree_boots.nwk"))
 info <- read.csv(paste0(url, "tip_data.csv"))
 
 p <- ggtree(x) %<+% info + xlim(-.1, 6)
-p2 <- p + geom_tiplab(aes(image= imageURL), geom="image", 
-                    offset=2, align=T, size=.16, hjust=0) +
-    geom_tiplab(geom="label", offset=1, hjust=.5) +
-    geom_tippoint(aes(shape = trophic_habit, color=trophic_habit, size=mass_in_kg)) + 
-    theme(legend.position="right") + scale_size_continuous(range=c(3, 10))
+p2 <- p + geom_tiplab(aes(image = imageURL), geom = "image", 
+                    offset = 2, align = T, size = .16, hjust = 0) +
+    geom_tiplab(geom = "label", offset = 1, hjust = .5) +
+    geom_tippoint(aes(shape = trophic_habit, color = trophic_habit, size = mass_in_kg)) + 
+    theme(legend.position = "right") + scale_size_continuous(range = c(3, 10))
 
-d2 = read.csv(paste0(url, "inode_data.csv"))
-p3 <- p2 %<+% d2 + geom_label(aes(label=vernacularName.y, fill=posterior)) + 
-    scale_fill_gradientn(colors=RColorBrewer::brewer.pal(3, "YlGnBu"))
+d2 <- read.csv(paste0(url, "inode_data.csv"))
+p3 <- p2 %<+% d2 + geom_label(aes(label = vernacularName.y, fill = posterior)) + 
+    scale_fill_gradientn(colors = RColorBrewer::brewer.pal(3, "YlGnBu"))
 print(p3)    
 ```
 
@@ -96,10 +96,10 @@ print(y)
 
 ## Now all the features (from external data attahced to the tree), that stored in 
 ## tree object can be used to annotate the tree.
-ggtree(y) + geom_tiplab(aes(label = vernacularName.x, color= trophic_habit)) + 
-    geom_label(aes(x=branch, label = vernacularName.y, fill=bootstrap)) + 
-    scale_fill_gradientn(colors=RColorBrewer::brewer.pal(3, "YlGnBu")) +
-    theme(legend.position="right") + xlim(-.1, 3.5) 
+ggtree(y) + geom_tiplab(aes(label = vernacularName.x, color = trophic_habit)) + 
+    geom_label(aes(x = branch, label = vernacularName.y, fill = bootstrap)) + 
+    scale_fill_gradientn(colors = RColorBrewer::brewer.pal(3, "YlGnBu")) +
+    theme(legend.position = "right") + xlim(-.1, 3.5) 
 ```
 
 The `treedata` object can be exported to `BEAST` compatible `NEXUS` file^[<https://bioconductor.org/packages/release/bioc/vignettes/treeio/inst/doc/Exporter.html>], which can be parsed by `treeio` or `FigTree`^[<http://tree.bio.ed.ac.uk/software/figtree/>]. This creates the possibility to integrate tree-associated data with the tree into a single file and visualize the data not only with `ggtree`, but also `FigTree`, *etc*. 
@@ -125,15 +125,15 @@ mergedGP <- tax_glom(mergedGP,"Order")
 
 melt_simple <- psmelt(mergedGP) %>% 
   filter(Abundance < 120) %>% 
-  select(OTU, val=Abundance)
+  select(OTU, val = Abundance)
 
 p <- ggtree(mergedGP) + 
-  geom_tippoint(aes(color=Phylum), size=1.5)
+  geom_tippoint(aes(color = Phylum), size = 1.5)
 
 facet_plot(p, panel="Abundance", data=melt_simple, 
-           geom_density_ridges, mapping = aes(x=val,group=label, 
-                                        fill=Phylum), 
-           color='grey80', lwd=.3)
+           geom_density_ridges, mapping = aes(x = val, group = label, 
+                                        fill = Phylum), 
+           color = 'grey80', lwd = .3)
 ```
 
 
@@ -145,66 +145,66 @@ This example reproduces Fig. 1 of [@chen_ancient_2017]. It extracts accession nu
 
 ```{r message=FALSE}
 
-require(tibble)
-require(tidyr)
-require(Biostrings)
-require(treeio)
-require(ggplot2)
-require(ggtree)
+library(tibble)
+library(tidyr)
+library(Biostrings)
+library(treeio)
+library(ggplot2)
+library(ggtree)
 
 hpvtree <- paste0("https://raw.githubusercontent.com/GuangchuangYu/",
                   "plotting_tree_with_data/master/HPV58.tree")
-tree = read.tree(hpvtree)
+tree <- read.tree(hpvtree)
 
-clade = c(A3=92, A1=94, A2=108, B1=156, B2=159, C=163, D1=173, D2=176)
-tree = groupClade(tree, clade)
+clade <- c(A3=92, A1=94, A2=108, B1=156, B2=159, C=163, D1=173, D2=176)
+tree <- groupClade(tree, clade)
 cols <- c(A1="#EC762F", A2="#CA6629", A3="#894418", B1="#0923FA", 
          B2="#020D87", C="#000000", D1="#9ACD32",D2="#08630A")
 
 ## visualize the tree with tip labels and tree scale
-p <- ggtree(tree, aes(color=group), ladderize=FALSE) %>% rotate(rootnode(tree)) + 
-    geom_tiplab(aes(label=paste0("italic('", label, "')")), parse = TRUE, size=2.5) +
-    geom_treescale(x = 0, y = 1, width=0.002) + 
-    scale_color_manual(values=c(cols, "black"), na.value="black", name= "Lineage",
-                      breaks=c("A1", "A2", "A3", "B1", "B2", "C", "D1", "D2")) +
-    guides(color = guide_legend(override.aes = list(size=5, shape=15))) +
+p <- ggtree(tree, aes(color = group), ladderize = FALSE) %>% rotate(rootnode(tree)) + 
+    geom_tiplab(aes(label=paste0("italic('", label, "')")), parse = TRUE, size = 2.5) +
+    geom_treescale(x = 0, y = 1, width = 0.002) + 
+    scale_color_manual(values = c(cols, "black"), na.value = "black", name = "Lineage",
+                      breaks = c("A1", "A2", "A3", "B1", "B2", "C", "D1", "D2")) +
+    guides(color = guide_legend(override.aes = list(size = 5, shape = 15))) +
     theme_tree2(legend.position = c(.1, .88))
 ## Optional
 ## add labels for monophyletic (A, C and D) and paraphyletic (B) groups  
-p <- p + geom_cladelabel(94, "italic(A1)", color=cols[["A1"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0, 0.5), parse=TRUE) +
-    geom_cladelabel(108, "italic(A2)", color = cols[["A2"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = 0.5, parse=TRUE) +
-    geom_cladelabel(131, "italic(A3)", color = cols[["A3"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0.5, 0), parse=TRUE) +
-    geom_cladelabel(92, "italic(A)", color = "darkgrey", offset = .00315, align=TRUE, 
-                        offset.text = 0.0002, barsize=2, fontsize=5, parse=TRUE) +
-    geom_cladelabel(156, "italic(B1)", color = cols[["B1"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0, 0.5), parse=TRUE) +
-    geom_cladelabel(159, "italic(B2)", color = cols[["B2"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0.5, 0), parse=TRUE) +
-    geom_strip(65, 71, "italic(B)", color="darkgrey", offset=0.00315, align=TRUE, 
-                        offset.text=0.0002, barsize=2, fontsize=5, parse=TRUE) + 
-    geom_cladelabel(163, "italic(C)", color = "darkgrey", offset = .0031, align=TRUE, 
-                        offset.text=0.0002, barsize=3.2, fontsize=5, parse=TRUE) +
-    geom_cladelabel(173, "italic(D1)", color = cols[["D1"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0, 0.5), parse=TRUE) +
-    geom_cladelabel(176, "italic(D2)", color = cols[["D2"]], offset = .003, align=TRUE, 
-                        offset.text=-.001, barsize=1.2, extend = c(0.5, 0), parse=TRUE) +
-    geom_cladelabel(172, "italic(D)", color = "darkgrey", offset = .00315, align=TRUE, 
-                        offset.text = 0.0002, barsize=2, fontsize=5, parse=TRUE) 
+p <- p + geom_cladelabel(94, "italic(A1)", color = cols[["A1"]], offset = .003, align = TRUE, 
+                    offset.text = -.001, barsize = 1.2, extend = c(0, 0.5), parse = TRUE) +
+    geom_cladelabel(108, "italic(A2)", color = cols[["A2"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = 0.5, parse = TRUE) +
+    geom_cladelabel(131, "italic(A3)", color = cols[["A3"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = c(0.5, 0), parse = TRUE) +
+    geom_cladelabel(92, "italic(A)", color = "darkgrey", offset = .00315, align = TRUE, 
+                   offset.text = 0.0002, barsize = 2, fontsize = 5, parse = TRUE) +
+    geom_cladelabel(156, "italic(B1)", color = cols[["B1"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = c(0, 0.5), parse = TRUE) +
+    geom_cladelabel(159, "italic(B2)", color = cols[["B2"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = c(0.5, 0), parse = TRUE) +
+    geom_strip(65, 71, "italic(B)", color = "darkgrey", offset = 0.00315, align = TRUE, 
+                   offset.text = 0.0002, barsize = 2, fontsize = 5, parse = TRUE) + 
+    geom_cladelabel(163, "italic(C)", color = "darkgrey", offset = .0031, align = TRUE, 
+                   offset.text = 0.0002, barsize = 3.2, fontsize = 5, parse = TRUE) +
+    geom_cladelabel(173, "italic(D1)", color = cols[["D1"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = c(0, 0.5), parse = TRUE) +
+    geom_cladelabel(176, "italic(D2)", color = cols[["D2"]], offset = .003, align = TRUE, 
+                   offset.text = -.001, barsize = 1.2, extend = c(0.5, 0), parse = TRUE) +
+    geom_cladelabel(172, "italic(D)", color = "darkgrey", offset = .00315, align = TRUE, 
+                   offset.text = 0.0002, barsize = 2, fontsize = 5, parse = TRUE) 
 ## Optional
 ## display support values
-p <- p + geom_nodelab(aes(subset = (node == 92), label="*"), 
-                    color="black", nudge_x=-.001, nudge_y=1) +
-    geom_nodelab(aes(subset = (node == 155), label="*"), 
-                    color="black", nudge_x=-.0003, nudge_y=-1) +
-    geom_nodelab(aes(subset = (node == 158), label="95/92/1.00"), 
-                    color="black", nudge_x=-0.0001, nudge_y=-1, hjust=1) +
-    geom_nodelab(aes(subset = (node == 162), label="98/97/1.00"), 
-                    color="black", nudge_x=-0.0001, nudge_y=-1, hjust=1) +
-    geom_nodelab(aes(subset = (node == 172), label="*"), 
-                    color="black", nudge_x=-.0003, nudge_y=-1) 
+p <- p + geom_nodelab(aes(subset = (node == 92), label = "*"), 
+                    color = "black", nudge_x = -.001, nudge_y = 1) +
+    geom_nodelab(aes(subset = (node == 155), label = "*"), 
+                    color = "black", nudge_x = -.0003, nudge_y = -1) +
+    geom_nodelab(aes(subset = (node == 158), label = "95/92/1.00"), 
+                    color = "black", nudge_x = -0.0001, nudge_y = -1, hjust = 1) +
+    geom_nodelab(aes(subset = (node == 162), label = "98/97/1.00"), 
+                    color = "black", nudge_x = -0.0001, nudge_y = -1, hjust = 1) +
+    geom_nodelab(aes(subset = (node == 172), label = "*"), 
+                    color = "black", nudge_x = -.0003, nudge_y = -1) 
 ```
 
 ```{r eval=F}
@@ -216,10 +216,10 @@ names(tl) <- acc
 ## read sequences from GenBank directly into R
 ## and convert the object to DNAStringSet
 tipseq <- ape::read.GenBank(acc) %>% as.character %>% 
-    lapply(.,paste0,collapse="") %>% unlist %>% 
+    lapply(.,paste0,collapse = "") %>% unlist %>% 
     DNAStringSet
 ## align the sequences using muscle
-tipseq_aln = muscle::muscle(tipseq)
+tipseq_aln <- muscle::muscle(tipseq)
 tipseq_aln <- DNAStringSet(tipseq_aln)
 ```
 
@@ -229,14 +229,14 @@ tl <- tree$tip.label
 acc <- sub("\\w+\\|", "", tl)
 names(tl) <- acc
 
-## writeXStringSet(tipseq_aln, file="HPV58_aln.fas")
-tipseq_aln = readDNAStringSet("HPV58_aln.fas")
+## writeXStringSet(tipseq_aln, file = "HPV58_aln.fas")
+tipseq_aln <- readDNAStringSet("HPV58_aln.fas")
 ```
 
 
 ```{r jv, fig.width=12, fig.height=12, fig.cap="\\label{fig:jv}Phylogeny of HPV58 complete genomes with dot and line plots of pairwise nucleotide sequence distances",  warning=FALSE, out.width="85%"}
 ## calculate pairwise hamming distances among sequences
-tipseq_dist <- stringDist(tipseq_aln, method="hamming")
+tipseq_dist <- stringDist(tipseq_aln, method = "hamming")
 
 ## calculate percentage of differences
 tipseq_d <- as.matrix(tipseq_dist)/width(tipseq_aln[1]) * 100
@@ -254,11 +254,11 @@ td$clade <- g[td$seq2]
 
 ## visualize the sequence differences using dot plot and line plot
 ## and align the sequence difference plot to the tree using facet_plot
-p2 <- facet_plot(p, panel="Sequence Distance", data=td, geom_point, 
-            mapping = aes(x=dist, color=clade, shape=clade), alpha=.6) %>%
-    facet_plot(panel = "Sequence Distance", data=td, geom=geom_path, 
-            mapping=aes(x=dist, group=seq2, color=clade), alpha=.6) + 
-    scale_shape_manual(values=1:8, guide=FALSE) 
+p2 <- facet_plot(p, panel = "Sequence Distance", data = td, geom_point, 
+            mapping = aes(x = dist, color = clade, shape = clade), alpha = .6) %>%
+    facet_plot(panel = "Sequence Distance", data = td, geom = geom_path, 
+            mapping=aes(x = dist, group = seq2, color = clade), alpha = .6) + 
+    scale_shape_manual(values = 1:8, guide = FALSE) 
 
 print(p2)
 ```
@@ -344,13 +344,13 @@ source("../plotTree.R")
 ## 2. legend not shown properly,
 ##      there is no taxa sampled from locations label as 'other' or 'VN'.
 ## 3. the positions of data panels are hard-coded.
-plotTree(tree="tree.nwk",
-         infoFile="info.csv", infoCols=NA,
-         colourNodesBy="location", legend.pos="topleft",
-         barData="bar.csv",snpFile="alleles.csv")
+plotTree(tree = "tree.nwk",
+         infoFile = "info.csv", infoCols = NA,
+         colourNodesBy = "location", legend.pos = "topleft",
+         barData = "bar.csv", snpFile = "alleles.csv")
 ```
 
-`ggtree` provide general solutions for integrating data. Method 1, the `%<+%` operator, can integrating external and internal node data and mapping the data as visual characteristics to visualize the tree (Fig. \ref{fig:md}) and other datasets used in `facet_plot` (in Fig. \ref{fig:fig1}, SNP and Trait data were colored by isolation location that was attached by `%<+%`). Method 2, the `facet_plot` function, has no restriction of input data as long as there is a `geom` function available to plot the data (*e.g.* species abundance displayed by `geom_density_ridges` that demonstrated in Fig. \ref{fig:phyloseq}). Users is free to combine different panels (Fig. \ref{fig:fig1}) and combine different `geom` layers in the same panel (Fig. \ref{fig:jv} and \ref{fig:fp4d}). The `plotTree` scritps can be easily reproduced using `ggtree`^[<https://github.com/GuangchuangYu/plotTree-ggtree>], while `ggtree` offers more flexibility and can do much more. As `ggtree` is more powerful, the authors of `plotTree` also use `ggtree` to present tree with associated data including genotypes, isolation locations, patient status, mutations *etc*, in their recent paper [@britto_laboratory_2018].
+`ggtree` provide general solutions for integrating data. Method 1, the `%<+%` operator, can integrate external and internal node data and map the data as visual characteristics to visualize the tree (Fig. \ref{fig:md}) and other datasets used in `facet_plot` (in Fig. \ref{fig:fig1}, SNP and Trait data were colored by isolation location that was attached by `%<+%`). Method 2, the `facet_plot` function, has no restriction of input data as long as there is a `geom` function available to plot the data (*e.g.* species abundance displayed by `geom_density_ridges` that demonstrated in Fig. \ref{fig:phyloseq}). Users are free to combine different panels (Fig. \ref{fig:fig1}) and combine different `geom` layers in the same panel (Fig. \ref{fig:jv} and \ref{fig:fp4d}). The `plotTree` scritps can be easily reproduced using `ggtree`^[<https://github.com/GuangchuangYu/plotTree-ggtree>], while `ggtree` offers more flexibility and can do much more. As `ggtree` is more powerful, the authors of `plotTree` also use `ggtree` to present tree with associated data including genotypes, isolation locations, patient status, mutations *etc*, in their recent paper [@britto_laboratory_2018].
 
 
 ```{r fig1, fig.width=12, fig.height=7, fig.cap="\\label{fig:fig1}Example of plotting SNP and trait data using ggtree", message=F, out.width="75%"}
@@ -365,8 +365,8 @@ tree <- read.tree(paste0(remote_folder, "tree.nwk"))
 info <- read.csv(paste0(remote_folder,"info.csv"))
 
 ## read and process the allele table
-snps<-read.csv(paste0(remote_folder, "alleles.csv"), header=F,
-                row.names=1, stringsAsFactor=F)
+snps<-read.csv(paste0(remote_folder, "alleles.csv"), header = F,
+                row.names = 1, stringsAsFactor = F)
 snps_strainCols <- snps[1,] 
 snps<-snps[-1,] # drop strain names
 colnames(snps) <- snps_strainCols
@@ -393,11 +393,11 @@ p <- p %<+% info + geom_tippoint(aes(color=location))
 
 ## visualize SNP and Trait data using dot and bar charts,
 ## and align them based on tree structure
-p2 <- facet_plot(p, panel="SNP", data=snp_data, geom=geom_point, 
-                mapping=aes(x=pos, color=location), shape='|') %>%
+p2 <- facet_plot(p, panel = "SNP", data = snp_data, geom = geom_point, 
+                mapping=aes(x = pos, color = location), shape = '|') %>%
     facet_plot("Trait", bar_data, ggstance::geom_barh, 
-                aes(x=dummy_bar_value, color=location, fill=location), 
-                stat="identity", width=.6) +
+                aes(x = dummy_bar_value, color = location, fill = location), 
+                stat = "identity", width = .6) +
     theme_tree2(legend.position=c(.05, .85))
 print(p2)
 ```
@@ -434,19 +434,19 @@ The `phylo4d` object is supported directly by `ggtree`, so that we can use `ggtr
 
 
 ```{r fp4d, warning=F, fig.width=15, fig.height=6.5, fig.cap="\\label{fig:fp4d}Visualizing phylo4d data using ggtree", out.width="90%"}
-d1 <- data.frame(x = seq(0.93, 1.15, length.out=5),
+d1 <- data.frame(x = seq(0.93, 1.15, length.out = 5),
                 lab = names(geospiza_raw$data))
 
 ## plot bubbles directly using data stored in 'g2'
-p1 <- ggtree(g2) + geom_tippoint(aes(size = wingL), x=d1$x[1], shape=1) + 
-    geom_tippoint(aes(size = tarsusL), x=d1$x[2], shape=1) + 
-    geom_tippoint(aes(size=culmenL), x=d1$x[3], shape=1) + 
-    geom_tippoint(aes(size=beakD), x=d1$x[4], shape=1) + 
-    geom_tippoint(aes(size=gonysW), x=d1$x[5], shape=1) + 
-    scale_size_continuous(range=c(3,12), name="") + 
-    geom_text(aes(x=x, y=0, label=lab), data=d1, angle=90) +
-    geom_tiplab(offset=.3) + xlim(0, 1.3) +
-    theme(legend.position=c(.1, .75)) + labs(tag = "A")
+p1 <- ggtree(g2) + geom_tippoint(aes(size = wingL), x = d1$x[1], shape = 1) + 
+    geom_tippoint(aes(size = tarsusL), x = d1$x[2], shape = 1) + 
+    geom_tippoint(aes(size = culmenL), x = d1$x[3], shape = 1) + 
+    geom_tippoint(aes(size = beakD),   x = d1$x[4], shape = 1) + 
+    geom_tippoint(aes(size = gonysW),  x = d1$x[5], shape = 1) + 
+    scale_size_continuous(range = c(3,12), name="") + 
+    geom_text(aes(x = x, y = 0, label = lab), data = d1, angle = 90) +
+    geom_tiplab(offset = .3) + xlim(0, 1.3) +
+    theme(legend.position = c(.1, .75)) + labs(tag = "A")
 
 library(dplyr)
 library(tidyr)
@@ -455,16 +455,16 @@ library(tidyr)
 d <- tipData(g2)
 d$tip <- rownames(d)
 dd <- gather(d, feature, value, -tip)
-cat = seq(ncol(d))
-names(cat) = names(d)
-dd$cat = cat[dd$feature]
+cat <- seq(ncol(d))
+names(cat) <- names(d)
+dd$cat <- cat[dd$feature]
 d2 <- select(dd, -value) %>% filter(tip ==  'fuliginosa')
 p <- ggtree(g2) + geom_tiplab() + xlim_tree(c(0, 1.2))
-p2 <- facet_plot(p, "Morphometric data", dd, geom_point, aes(x=cat, size=value), shape=1) %>% 
-    facet_plot("Morphometric data", d2, geom_text, aes(x=cat, y=0, label=feature), angle=90) + 
-    scale_size_continuous(range=c(3, 12)) + 
-    theme(legend.position="right") + 
-    coord_cartesian(clip="off") + labs(tag = "B")
+p2 <- facet_plot(p, "Morphometric data", dd, geom_point, aes(x = cat, size = value), shape = 1) %>% 
+    facet_plot("Morphometric data", d2, geom_text, aes(x = cat, y = 0, label = feature), angle = 90) + 
+    scale_size_continuous(range = c(3, 12)) + 
+    theme(legend.position = "right") + 
+    coord_cartesian(clip = "off") + labs(tag = "B")
 cowplot::plot_grid(p1, p2)   
 ```
 
@@ -473,26 +473,26 @@ cowplot::plot_grid(p1, p2)
 
 ```{r heat4d, warning=F, fig.width=15, fig.height=7, fig.cap="\\label{fig:heat4d}Visualizing phylo4d data as heatmap using 'facet\\textunderscore plot()' with additional data to color taxa (A), 'facet\\textunderscore plot()' works with 'gheatmap' (B)", out.width="85%"}
 diet = data.frame(species=tipLabels(g2), 
-    Diet=c("Seeds","Seeds", "Seeds", "Cacti", "Cacti", "Seeds", 
-        "Insects", "Insects", "Insects", "Insects", "Fruits", 
-        "Insects", "Insects", "Insects"))
+    Diet = c("Seeds","Seeds", "Seeds", "Cacti", "Cacti", "Seeds","Insects",
+         "Insects", "Insects", "Insects", "Fruits", "Insects", "Insects", "Insects"))
 
-p <- ggtree(g2) %<+% diet + geom_tiplab(aes(color = Diet), offset=.05) + 
-    geom_tippoint(aes(color = Diet), size=5, alpha=.5) +
-    xlim_tree(c(0, 1.2)) 
+p <- ggtree(g2) %<+% diet + geom_tiplab(aes(color = Diet), offset = .05) + 
+    geom_tippoint(aes(color = Diet), size = 5, alpha = .5) +
+    xlim_tree(c(0, 1.2))
 
 p2 <- gheatmap(ggtree(g2), tipData(g2), colnames_angle = 90) %<+% diet 
 
-p3 <- facet_plot(p, "Morphometric data", dd, geom_tile, aes(x=cat, fill = value)) %>% 
-    facet_plot("Morphometric data", d2, geom_text, aes(x=cat, y=0, label=feature), angle=90) +
-    scale_fill_viridis_c(na.value = "white") + labs(tag = "A") + 
-    theme(legend.position="right")  
+p3 <- facet_plot(p, "Morphometric data", dd, geom_tile, aes(x = cat, fill = value)) %>% 
+    facet_plot("Morphometric data", d2, geom_text,
+               aes(x = cat, y = 0, label = feature), angle = 90) +
+    scale_fill_viridis_c(na.value = "white") + labs(tag = "A") + theme(legend.position="right")  
 
-p4 <- facet_plot(p2, "Morphometric data", dd, geom_point, aes(x=cat, size=value, color=Diet)) %>% 
-    facet_plot("Morphometric data", d2, geom_text, aes(x=cat, y=0, label=feature), angle=90) + 
-    scale_size_continuous(range=c(3, 12)) + labs(tag = "B") +
-    theme(legend.position="right") + coord_cartesian(clip="off") 
-
+p4 <- facet_plot(p2, "Morphometric data", dd, geom_point,
+                 aes(x = cat, size = value, color = Diet)) %>% 
+    facet_plot("Morphometric data", d2, geom_text,
+               aes(x = cat, y = 0, label = feature), angle = 90) + 
+    scale_size_continuous(range = c(3, 12)) + labs(tag = "B") +
+    theme(legend.position = "right") + coord_cartesian(clip = "off")
 cowplot::plot_grid(p3, p4)    
 ```    
 

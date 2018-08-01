@@ -12,6 +12,7 @@ This repo contains source code to produce Supplementary Material of the above pa
 
 
 + plotTree: downloaded from <https://github.com/katholt/plotTree>, access date: 2018-07-23
+    - A `ggtree` version can be found on <https://github.com/GuangchuangYu/plotTree-ggtree>.
 + HPV58.tree: newick text of the HPV58 tree published on <http://jvi.asm.org/content/91/21/e01285-17>.
 + HPV58_aln.fas: aligned tip sequences of `HPV58.tree`
 + header.tex: LaTeX packages that used to compile the PDF

@@ -85,7 +85,7 @@ p3 <- p2 %<+% d2 + geom_label(aes(label = vernacularName.y, fill = posterior)) +
 print(p3)    
 ```
 
-Although the data integrated by `%<+%` operator in `ggtree` is for tree visualization, the data attached to the `ggtree` graphic object can be converted to `treedata` object that contains the tree and the attached data. The data stored in the `treedata` object can be used directly to annotate the tree in `ggtree`.
+Although the data integrated by the `%<+%` operator in `ggtree` is for tree visualization, the data attached to the `ggtree` graphic object can be converted to `treedata` object that contains the tree and the attached data. The data stored in the `treedata` object can be used directly to annotate the tree in `ggtree`.
 
 ```{r treedata, warning=F, fig.width=8, fig.height=4.5, out.width="75%", fig.cap="\\label{fig:treedata}Example of visualizing treedata object that contains tree with associated data"}
 ## convert ggtree object to treedata object
@@ -107,7 +107,7 @@ The `treedata` object can be exported to `BEAST` compatible `NEXUS` file^[<https
 
 ### 1.2. Visualizing species abundance distribution with phylogenetic tree
 
-Species abundance is continuous numerical data and usually summarized as boxplot, violinplot or density curve, which are all suported by `facet_plot` (Table \ref{tab:geom}). This example uses microbome data that provided in `phyloseq` package and density ridgeline is employed to visualize the abundence data. `facet_plot` automatically re-arranges the abundance data according to the tree structure, visualizes the data using the specify `geom` function, *i.e.* `geom_density_ridges`, and align the density curves with the tree as demonstrated in Fig. \ref{fig:phyloseq}. Note that data stored in the `phyloseq` object is visible to `ggtree` and can be used directly in tree visualization (`Phylum` was used to color tips and density ridgelines in this example).
+Species abundance is continuous numerical data and usually summarized as boxplot, violinplot or density curve, which are all suported by `facet_plot` (Table \ref{tab:geom}). This example uses microbome data that provided in `phyloseq` package and density ridgeline is employed to visualize the abundence data. `facet_plot` automatically re-arranges the abundance data according to the tree structure, visualizes the data using the specify `geom` function, *i.e.* `geom_density_ridges`, and aligns the density curves with the tree as demonstrated in Fig. \ref{fig:phyloseq}. Note that data stored in the `phyloseq` object is visible to `ggtree` and can be used directly in tree visualization (`Phylum` was used to color tips and density ridgelines in this example).
 
 ```{r phyloseq, fig.height=8, fig.width=9, fig.cap="\\label{fig:phyloseq}Phylogenetic tree with OTU abundance densities", out.width="80%", eval=T, results='hide', message=F, warning=F}
 library(phyloseq)
@@ -156,14 +156,14 @@ hpvtree <- paste0("https://raw.githubusercontent.com/GuangchuangYu/",
                   "plotting_tree_with_data/master/HPV58.tree")
 tree <- read.tree(hpvtree)
 
-clade <- c(A3=92, A1=94, A2=108, B1=156, B2=159, C=163, D1=173, D2=176)
+clade <- c(A3 = 92, A1 = 94, A2 = 108, B1 = 156, B2 = 159, C = 163, D1 = 173, D2 = 176)
 tree <- groupClade(tree, clade)
-cols <- c(A1="#EC762F", A2="#CA6629", A3="#894418", B1="#0923FA", 
-         B2="#020D87", C="#000000", D1="#9ACD32",D2="#08630A")
+cols <- c(A1 = "#EC762F", A2 = "#CA6629", A3 = "#894418", B1 = "#0923FA", 
+         B2 = "#020D87", C = "#000000", D1 = "#9ACD32",D2 = "#08630A")
 
 ## visualize the tree with tip labels and tree scale
 p <- ggtree(tree, aes(color = group), ladderize = FALSE) %>% rotate(rootnode(tree)) + 
-    geom_tiplab(aes(label=paste0("italic('", label, "')")), parse = TRUE, size = 2.5) +
+    geom_tiplab(aes(label = paste0("italic('", label, "')")), parse = TRUE, size = 2.5) +
     geom_treescale(x = 0, y = 1, width = 0.002) + 
     scale_color_manual(values = c(cols, "black"), na.value = "black", name = "Lineage",
                       breaks = c("A1", "A2", "A3", "B1", "B2", "C", "D1", "D2")) +
@@ -216,7 +216,7 @@ names(tl) <- acc
 ## read sequences from GenBank directly into R
 ## and convert the object to DNAStringSet
 tipseq <- ape::read.GenBank(acc) %>% as.character %>% 
-    lapply(.,paste0,collapse = "") %>% unlist %>% 
+    lapply(., paste0, collapse = "") %>% unlist %>% 
     DNAStringSet
 ## align the sequences using muscle
 tipseq_aln <- muscle::muscle(tipseq)
@@ -239,7 +239,7 @@ tipseq_aln <- readDNAStringSet("HPV58_aln.fas")
 tipseq_dist <- stringDist(tipseq_aln, method = "hamming")
 
 ## calculate percentage of differences
-tipseq_d <- as.matrix(tipseq_dist)/width(tipseq_aln[1]) * 100
+tipseq_d <- as.matrix(tipseq_dist) / width(tipseq_aln[1]) * 100
 
 ## convert the matrix to tidy data frame for facet_plot
 dd <- as_data_frame(tipseq_d)
@@ -267,7 +267,7 @@ print(p2)
 ## 2. Geometric layers that supported by `facet_plot`
 
 
-`facet_plot` is a general solution for linking graphic layer to a tree. The function internally re-order the input data based on the tree structure and visualize the data at the specific panel by the geometric function. Users are freely to visualize several panels to plot different types of data as demonstrated in Fig. \ref{fig:fig1} and use different geometric functions to plot the same dataset (Fig. \ref{fig:jv}) or different datasets (Fig. \ref{fig:fp4d}) on the same panel.
+`facet_plot` is a general solution for linking graphic layer to a tree. The function internally re-orders the input data based on the tree structure and visualizes the data at the specific panel by the geometric function. Users are freely to visualize several panels to plot different types of data as demonstrated in Fig. \ref{fig:fig1} and use different geometric functions to plot the same dataset (Fig. \ref{fig:jv}) or different datasets (Fig. \ref{fig:fp4d}) on the same panel.
 
 `facet_plot` is designed to work with most of the `geom` functions defined in `ggplot2` [@wickham_ggplot2_2016] and other `ggplot2`-based packages. Here is the list of the geometric functions that works seamlessly with `facet_plot`. As the `ggplot2` community keeps expanding and more `geom` functions will be implemented in either `ggplot2` or other extensions, `facet_plot` will gains more power to present data in future. Note that different `geom` functions can be combined to present data on the same panel (Fig. \ref{fig:jv} and \ref{fig:fp4d}) and the combinations of different `geom` functions create the possibility to present more complex data with phylogeny.
 
@@ -327,7 +327,7 @@ We have presented detail comparison of `ggtree` with `ape` [@paradis_ape:_2004],
 
 ### 3.1 plotTree scripts
 
-Although `plotTree` is not an `R` package, we include the scripts for comparision as the scripts has the abilities of plotting tree with basic information, heatmap and bar plots. Phylogenetic tree is visualized by `plot.phylo` provided by `ape` [@paradis_ape:_2004]. The tip information used in `plotTree` is not really integrated, as it cannot be mapped to visual characteristics, such as color, shape and size that are supported in `ggtree`. The information is hard-coded to only color tip with circle symbols and print the text next to the tips. In addition, there is no solution for mapping data to internal nodes. For plotting tree with data, `plotTree` only supports heatmap for matrix, barplot for numerical data, dotplot for allele data and line segments for genome blocks. The capabilities is restricted to specific needs and only applied to specific data. An example of plotting tree with data using `plotTree` is demonstrated in Fig. \ref{fig:plotTree} and a corresponding `ggtree` version is illustrated in Fig. \ref{fig:fig1}.
+Although `plotTree` is not an `R` package, we include the scripts for comparision as the scripts has the abilities of plotting tree with basic information, heatmap and bar plots. Phylogenetic tree is visualized by `plot.phylo` provided by `ape` [@paradis_ape:_2004]. The tip information used in `plotTree` is not really integrated, as it cannot be mapped to visual characteristics, such as color, shape and size that are supported in `ggtree`. The information is hard-coded to only color tip with circle symbols and print the text next to the tips. In addition, there is no solution for mapping data to internal nodes. For plotting tree with data, `plotTree` only supports heatmap for matrix, barplot for numerical data, dotplot for allele data and line segments for genome blocks. The capabilities are restricted to specific needs and only applied to specific data. An example of plotting tree with data using `plotTree` is demonstrated in Fig. \ref{fig:plotTree} and a corresponding `ggtree` version is illustrated in Fig. \ref{fig:fig1}.
 
 
 ```{r plotTree, results='hide', fig.width=12, fig.height=7, fig.cap="\\label{fig:plotTree}Example of plotTree", out.width="70%"}
@@ -350,7 +350,7 @@ plotTree(tree = "tree.nwk",
          barData = "bar.csv", snpFile = "alleles.csv")
 ```
 
-`ggtree` provide general solutions for integrating data. Method 1, the `%<+%` operator, can integrate external and internal node data and map the data as visual characteristics to visualize the tree (Fig. \ref{fig:md}) and other datasets used in `facet_plot` (in Fig. \ref{fig:fig1}, SNP and Trait data were colored by isolation location that was attached by `%<+%`). Method 2, the `facet_plot` function, has no restriction of input data as long as there is a `geom` function available to plot the data (*e.g.* species abundance displayed by `geom_density_ridges` that demonstrated in Fig. \ref{fig:phyloseq}). Users are free to combine different panels (Fig. \ref{fig:fig1}) and combine different `geom` layers in the same panel (Fig. \ref{fig:jv} and \ref{fig:fp4d}). The `plotTree` scritps can be easily reproduced using `ggtree`^[<https://github.com/GuangchuangYu/plotTree-ggtree>], while `ggtree` offers more flexibility and can do much more. As `ggtree` is more powerful, the authors of `plotTree` also use `ggtree` to present tree with associated data including genotypes, isolation locations, patient status, mutations *etc*, in their recent paper [@britto_laboratory_2018].
+`ggtree` provide general solutions for integrating data. Method 1, the `%<+%` operator, can integrate external and internal node data and map the data as visual characteristics to visualize the tree (Fig. \ref{fig:md}) and other datasets used in `facet_plot` (in Fig. \ref{fig:fig1}, SNP and Trait data were colored by isolation location that was attached by `%<+%`). Method 2, the `facet_plot` function, has no restriction of input data as long as there is a `geom` function available to plot the data (*e.g.* species abundance displayed by `geom_density_ridges` as demonstrated in Fig. \ref{fig:phyloseq}). Users are free to combine different panels (Fig. \ref{fig:fig1}) and combine different `geom` layers in the same panel (Fig. \ref{fig:jv} and \ref{fig:fp4d}). The `plotTree` scritps can be easily reproduced using `ggtree`^[<https://github.com/GuangchuangYu/plotTree-ggtree>], while `ggtree` offers more flexibility and can do much more. As `ggtree` is more powerful, the authors of `plotTree` also use `ggtree` to present tree with associated data including genotypes, isolation locations, patient status, mutations *etc*, in their recent paper [@britto_laboratory_2018].
 
 
 ```{r fig1, fig.width=12, fig.height=7, fig.cap="\\label{fig:fig1}Example of plotting SNP and trait data using ggtree", message=F, out.width="75%"}
@@ -406,7 +406,7 @@ print(p2)
 
 `metacoder` [@foster_metacoder:_2017] is designed for visualizing herachical data, mainly for community taxonomic diversity data. It produces heat tree that uses *e.g.* taxa abundance to scale color and size of nodes and edges. This is similar to method 1 presented in our manuscript. `ggtree` [@yu_ggtree:_2017] is more flexible and can do more, such as coloring text labels and plotting variety of node shapes using categorical data.
 
-The heat tree implemented in `metacoder` is designed for herachical data, but not for phylogeny. `metacoder` internally use graph layout algorithms implemented in `igraph` [@igraph] and doesn't support widely used phylogenetic tree layouts (*e.g.* rectangular and slanted layouts). Edge length for phylogenetic tree is also not supported. 
+The heat tree implemented in `metacoder` is designed for herachical data, but not for phylogeny. `metacoder` internally uses graph layout algorithms implemented in `igraph` [@igraph] and doesn't support widely used phylogenetic tree layouts (*e.g.* rectangular and slanted layouts). Edge length for phylogenetic tree is also not supported. 
 
 `ggtree` is designed for general purpose and can be easily extended for specific research applications. For example, the R package, `microbiomeViz`^[<https://github.com/lch14forever/microbiomeViz>] for visualizing microbiome data, is developed based on `ggtree`. `microbiomeViz` is similar to the python library, `GraPhlAn`, which supports phylogeny and has better annotation abilities than `metacoder` (according to [@foster_metacoder:_2017]).
 
@@ -498,7 +498,7 @@ cowplot::plot_grid(p3, p4)
 
 ### 3.4 Summary
 
-Although there are many software packages support visualizing phylogenetic tree, plotting tree with data is often missing or with only limited supports. Some of the packages defines `S4` classes to store phylogenetic tree with domain specific data, such `OutbreakTools` [@jombart_outbreaktools:_2014] defined `obkData` for storing tree with epidemiology data and `phyloseq` [@mcmurdie_phyloseq:_2013] defines `phyloseq` for storing tree with microbiome data. These packages are capable to present some of the data stored in the object on the tree. However, not all the associated data are supported. For example, species abundance stored in `phyloseq` object is not supported to be visualized using `phyloseq` package. These packages did not provide any utilities to integrate external data for tree visualization. `metacoder` is able to integrate external data to be used as visual characteristics (limited to size and color) to produce heat tree. However, phylogenetic tree layouts are not supported and branch lengthes will be ignored in `metacoder`. None of these packages support visualizing external data and align the plot to tree based on the tree structure. 
+Although there are many software packages support visualizing phylogenetic tree, plotting tree with data is often missing or with only limited supports. Some of the packages defines `S4` classes to store phylogenetic tree with domain specific data, such `OutbreakTools` [@jombart_outbreaktools:_2014] defined `obkData` for storing tree with epidemiology data and `phyloseq` [@mcmurdie_phyloseq:_2013] defines `phyloseq` for storing tree with microbiome data. These packages are capable to present some of the data stored in the object on the tree. However, not all the associated data are supported. For example, species abundance stored in `phyloseq` object is not supported to be visualized using `phyloseq` package. These packages did not provide any utilities to integrate external data for tree visualization. `metacoder` is able to integrate external data to be used as visual characteristics (limited to size and color) to produce heat tree. However, phylogenetic tree layouts are not supported and branch length will be ignored in `metacoder`. None of these packages support visualizing external data and align the plot to tree based on the tree structure. 
 
 
 The `phylobase` package support integrating external data (especially numerical matrix) to phylogenetic tree and visualize the data as bubble plot with the tree side by side. The `plotTree` scripts supports visualizing predefined datasets as heatmap or bar plots and aligns the plot to the tree. They only provide limited supports to visualize specific data types. The funtions provided by these packages or scripts are hard-coded to plot simple tree with specific panel (bubble plot or heatmap, *etc*) and there is no utilities provided to add further layer of annotations.  

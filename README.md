@@ -3,7 +3,7 @@
 If you use this work in published research, please cite:
 
 
-__G Yu__<sup>\*</sup>, TTY Lam, H Zhu, Y Guan<sup>\*</sup>. Two methods for mapping and visualizing associated data on phylogeny using ggtree. __*Journal X*__, to be submitted.
+__G Yu__<sup>\*</sup>, TTY Lam, H Zhu, Y Guan<sup>\*</sup>. Two methods for mapping and visualizing associated data on phylogeny using ggtree. __*Molecular Biology and Evolution*__, minor revision.
 
 
 ----
